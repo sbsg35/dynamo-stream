@@ -1,0 +1,7 @@
+node_modules
+.serverless
+.webpack
+_warmup
+.esbuild
+yarn-error.log
+.DS_Store

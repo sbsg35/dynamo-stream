@@ -1,0 +1,11 @@
+{
+  "generalConfiguration.sortOnBeforeSave": true,
+  "importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type": "newLineEachExpressionAfterCountLimitExceptIfOnlyOne",
+  "importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 120,
+  "importStringConfiguration.tabSize": 2,
+  "importStringConfiguration.quoteMark": "double",
+  "importSorter.sortConfiguration.removeUnusedImports": true,
+  "importSorter.sortConfiguration.removeUnusedDefaultImports": true,
+  "importSorter.sortConfiguration.joinImportPaths": false,
+  "importSorter.importStringConfiguration.trailingComma": "multiLine"
+}

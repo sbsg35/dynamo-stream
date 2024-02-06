@@ -1,0 +1,4 @@
+*.test.ts
+.eslintrc.js
+jest.config.js
+babel.config.js
