@@ -5,3 +5,4 @@ _warmup
 .esbuild
 yarn-error.log
 .DS_Store
+.env

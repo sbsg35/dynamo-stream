@@ -3,7 +3,8 @@
   "description": "",
   "main": "serverless.ts",
   "scripts": {
-    "deploy": "sls deploy"
+    "deploy:dev": "sls deploy --stage dev",
+    "remove:dev": "sls remove --stage dev"
   },
   "engines": {
     "node": ">=18.0.0"

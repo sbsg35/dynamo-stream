@@ -1,21 +1,17 @@
 import type { AWS } from "@serverless/typescript";
 
 const serverlessConfiguration: AWS = {
-  service: "mock-service",
+  service: "stream-test",
   frameworkVersion: "3",
 
   params: {
     offline: {
       stage: "dev",
-
-      sentryDSN: "", // leave blank for not logging in local dev
     },
     prod: {},
     default: {
       region: "${opt:region, self:provider.region}",
       stage: "${sls:stage}",
-
-      sentryDSN: "",
     },
   },
 
@@ -44,14 +40,18 @@ const serverlessConfiguration: AWS = {
     },
   },
 
-  plugins: ["serverless-dotenv-plugin", "serverless-esbuild", "serverless-offline", "serverless-prune-plugin"],
+  plugins: [
+    "serverless-esbuild",
+    "serverless-offline",
+    "serverless-prune-plugin",
+  ],
 
   provider: {
     name: "aws",
-    runtime: "nodejs16.x",
+    runtime: "nodejs18.x",
     region: "us-east-1",
-    profile: "iamadmin-general",
     logRetentionInDays: 14,
+    profile: "iamadmin-general",
     timeout: 30, // seconds - nb APIGateway has 30 sec limit
 
     apiGateway: {
@@ -72,7 +72,13 @@ const serverlessConfiguration: AWS = {
 
     iam: {
       role: {
-        statements: [{ Effect: "Allow", Action: ["dynamodb:*"], Resource: [{ "Fn::GetAtt": ["MainTable", "Arn"] }] }],
+        statements: [
+          {
+            Effect: "Allow",
+            Action: ["dynamodb:*"],
+            Resource: [{ "Fn::GetAtt": ["MainTable", "Arn"] }],
+          },
+        ],
       },
     },
   },
@@ -104,10 +110,18 @@ const serverlessConfiguration: AWS = {
   },
 
   functions: {
-    root: {
-      handler: "src/handler/root.main$",
+    streamhandler: {
+      handler: "src/handler/index.main",
       description: "health check",
-      events: [{ stream: { type: "dynamodb", batchSize: 4, arn: { "Fn::GetAtt": ["MainTable", "StreamArn"] } } }],
+      events: [
+        {
+          stream: {
+            type: "dynamodb",
+            batchSize: 4,
+            arn: { "Fn::GetAtt": ["MainTable", "StreamArn"] },
+          },
+        },
+      ],
     },
   },
 };
